@@ -111,13 +111,18 @@ input[type="submit"]:hover {
     color: rgb(0, 84, 153)
 }
 
+<<<<<<< HEAD
 
 @media screen and (max-width: 1280px) {
+=======
+@media screen and (max-width: 600px) {
+>>>>>>> 4ff6f53950282d7c91ff1c1c8f08b7212cf3fd20
     .App {
         width: 90%;
     }
   }
 
+<<<<<<< HEAD
   @media screen and (min-width: 1280px) {
     .App {
         width: 60%;
@@ -125,3 +130,10 @@ input[type="submit"]:hover {
   }
 
 
+=======
+  @media screen and (min-width: 820px) {
+    .App {
+        width: 60%;
+    }
+  }
+>>>>>>> 4ff6f53950282d7c91ff1c1c8f08b7212cf3fd20
