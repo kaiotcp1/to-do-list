@@ -10,7 +10,25 @@ function App() {
   const [todos, setTodos] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  // Load todos on page load
+  useEffect(() => {
+
+    const loadData = async () => {
+      setLoading(true);
+      const res = await fetch(API + "/todos") // GET é padrão no fetch()
+      .then((res) => res.json())
+      .then((data) => data)
+      .catch((error) => console.log(error));
+
+      setLoading(false);
+      setTodos(res);
+    };
+
+    loadData();
+  }, []);
+
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const todo = {
@@ -20,8 +38,14 @@ function App() {
       done: false,
     };
 
-    
-    console.log(todo);
+    await fetch(API + "/todos", {
+      method: "POST",
+      body: JSON.stringify(todo),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
     setTitle("");
     setTime("");
   }
@@ -34,26 +58,26 @@ function App() {
       <div className="form-todo">
         <h2>Ensira a sua próxima tarefa:</h2>
         <form onSubmit={handleSubmit}>
-        <div className="form-control">
-          <label htmlFor="title">O que você vai fazer ?</label>
-          <input type="text"
-            name='title'
-            placeholder='Título da tarea'
-            onChange={(e) => setTitle(e.target.value)}
-            value={title}
-            required />
-        </div>
-        <div className="form-control">
-          <label htmlFor="time">Duração:</label>
-          <input type="text"
-            name='time'
-            placeholder='Tempo estimado (em horas)'
-            onChange={(e) => setTime(e.target.value)}
-            value={time}
-            required
-          />
-        </div>
-        <input type="submit" value="Criar tarefa" />
+          <div className="form-control">
+            <label htmlFor="title">O que você vai fazer ?</label>
+            <input type="text"
+              name='title'
+              placeholder='Título da tarea'
+              onChange={(e) => setTitle(e.target.value)}
+              value={title}
+              required />
+          </div>
+          <div className="form-control">
+            <label htmlFor="time">Duração:</label>
+            <input type="text"
+              name='time'
+              placeholder='Tempo estimado (em horas)'
+              onChange={(e) => setTime(e.target.value)}
+              value={time}
+              required
+            />
+          </div>
+          <input type="submit" value="Criar tarefa" />
         </form>
       </div>
       <div className="list-todo">
