@@ -36,13 +36,28 @@ function App() {
     setTodos((prevState) => prevState.filter((todo) => todo.id !== id));
   };
 
+  const handleEddit = async(todo) => {
+    
+    todo.done = !todo.done;
+    
+    const data =await fetch(API + "/todos/" + todo.id, {
+      method: "PUT",
+      body: JSON.stringify(todo),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    setTodos((prevState) => prevState.map((t) => (t.id === data.id) ? (t = data): t));
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const todo = {
       id: Math.random(),
-      title,
+      title, 
       time,
       done: false,
     };
