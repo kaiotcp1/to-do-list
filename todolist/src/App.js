@@ -27,6 +27,15 @@ function App() {
     loadData();
   }, []);
 
+  const handleDelete = async (id) => {
+
+    await fetch(API + "/todos/" + id, {
+      method: "DELETE",
+    });
+
+    setTodos((prevState) => prevState.filter((todo) => todo.id !== id));
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -94,10 +103,10 @@ function App() {
             <h3 className={todo.done ? "todo-done" : ""}>{todo.title}</h3>
             <p>Duração: {todo.time}</p>
             <div className="actions">
-              <span>
+              <span onClick={() => handleEddit(todo)}>
                 {!todo.done ? <BsBookmarkCheck/> : <BsBookmarkCheckFill/>}
               </span>
-              <BsTrash/>
+              <BsTrash onClick={() => handleDelete(todo.id)}/>
             </div>
           </div>
         ))}
